@@ -4,8 +4,8 @@ class Destination
 
   UNIQUE_ID_ATTRIBUTE = "geo_id"
 
-  attr_accessor :parent
-  attr_reader :name, :id, :content, :children
+  attr_accessor :parent, :content
+  attr_reader :name, :id, :children
 
   def initialize(id, name, parent)
     self.id = id
@@ -30,7 +30,7 @@ private
     raise InvalidNode.new("multiple node_name nodes found") if node_name_count > 1
   end
 
-  attr_writer :name, :id, :content, :children
+  attr_writer :name, :id, :children
 
 
 end
