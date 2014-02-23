@@ -2,7 +2,7 @@ class InvalidNode < StandardError; end
 
 class Destination
 
-  UNIQUE_ID_ATTRIBUTE = "geo_id"
+  UNIQUE_ID_ATTRIBUTE = "atlas_node_id"
 
   attr_accessor :parent, :content
   attr_reader :name, :id, :children
@@ -12,6 +12,7 @@ class Destination
     self.name = name
     self.parent = parent
     self.children = []
+    self.content = []
   end
 
   def self.create_from_node(node, parent_destination)

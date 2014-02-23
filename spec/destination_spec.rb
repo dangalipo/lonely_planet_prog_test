@@ -29,7 +29,7 @@ describe Destination do
 
     context "node does not have the specified unique id attribute" do
 
-      specify { expect{create_from_node}.to raise_error(InvalidNode, "geo_id not found") }
+      specify { expect{create_from_node}.to raise_error(InvalidNode, "atlas_node_id not found") }
 
     end
 
@@ -37,7 +37,7 @@ describe Destination do
 
       let(:id)      { "1" }
       let(:name)    { 'test' }
-      before(:each) { node["geo_id"] = id }
+      before(:each) { node["atlas_node_id"] = id }
 
       context "and does not have the a 'node_name' node in it's children" do
 

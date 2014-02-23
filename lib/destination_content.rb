@@ -1,10 +1,12 @@
 class DestinationContent
 
+  UNIQUE_ID_ATTRIBUTE = 'atlas_id'
+
   attr_reader :title, :content, :children, :parent
 
-  def initialize(title, content, parent)
+  def initialize(title, parent)
     self.title = title
-    self.content = content
+    self.content = []
     self.parent = parent
     self.children = []
   end
