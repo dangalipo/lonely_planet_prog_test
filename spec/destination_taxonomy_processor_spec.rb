@@ -62,7 +62,6 @@ describe DestinationTaxonomyProcessor do
 
     end
 
-
   end
 
 
