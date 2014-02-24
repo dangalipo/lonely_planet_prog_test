@@ -15,7 +15,7 @@ describe Destination do
     specify { expect(new_destination.name).to eq name }
     specify { expect(new_destination.parent).to eq parent }
     specify { expect(new_destination.children).to be_empty }
-    specify { expect(new_destination.content).to be_nil }
+    specify { expect(new_destination.content).to be_empty }
 
   end
 
@@ -57,7 +57,7 @@ describe Destination do
         specify { expect(create_from_node.name).to eq name }
         specify { expect(create_from_node.parent).to eq parent }
         specify { expect(create_from_node.children).to be_empty }
-        specify { expect(create_from_node.content).to be_nil }
+        specify { expect(create_from_node.content).to be_empty }
 
       end
 

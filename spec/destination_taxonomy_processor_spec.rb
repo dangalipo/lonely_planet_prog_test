@@ -32,7 +32,7 @@ describe DestinationTaxonomyProcessor do
       specify { expect(top_level_destination.children.count).to eq 2 }
       specify { expect(top_level_destination.children.collect(&:id)).to include "355629" }
       specify { expect(top_level_destination.children.collect(&:id)).to include "355633" }
-      specify { expect(top_level_destination.content).to be_nil }
+      specify { expect(top_level_destination.content).to be_empty }
 
     end
 
@@ -46,7 +46,7 @@ describe DestinationTaxonomyProcessor do
       specify { expect(first_level_child_destination.children.count).to eq 2 }
       specify { expect(first_level_child_destination.children.collect(&:id)).to include "355630" }
       specify { expect(first_level_child_destination.children.collect(&:id)).to include "355632" }
-      specify { expect(first_level_child_destination.content).to be_nil }
+      specify { expect(first_level_child_destination.content).to be_empty }
 
     end
 
@@ -58,7 +58,7 @@ describe DestinationTaxonomyProcessor do
       specify { expect(bottom_level_child_destination.name).to eq "Khartoum" }
       specify { expect(bottom_level_child_destination.parent.id).to eq "355629" }
       specify { expect(bottom_level_child_destination.children).to be_empty }
-      specify { expect(bottom_level_child_destination.content).to be_nil }
+      specify { expect(bottom_level_child_destination.content).to be_empty }
 
     end
 
