@@ -2,6 +2,7 @@ require_relative "destination_taxonomy_processor"
 require_relative "destination_content_processor"
 require_relative "destination_renderer"
 
+class InvocationError < ArgumentError; end
 class DestinationBatchProcessor
 
   TEMPLATE_ASSETS = 'templates/static'
@@ -29,10 +30,10 @@ private
   attr_accessor :taxonomy_filename, :destination_content_filename, :output_dir
 
   def validate_args(args)
-    raise ArgumentError.new("Expected arguments: <taxonomy file>, <destination content file>, <output dir>") unless args.length == 3
-    raise ArgumentError.new("Taxonomy File #{args[0]} does not exist") unless File.exists?(args[0])
-    raise ArgumentError.new("Destination Content File #{args[1]} does not exist") unless File.exists?(args[1])
-    raise ArgumentError.new("Output Directory #{args[2]} does not exist") unless Dir.exists?(args[2])
+    raise InvocationError.new("Expected arguments: <taxonomy file>, <destination content file>, <output dir>") unless args.length == 3
+    raise InvocationError.new("Taxonomy File #{args[0]} does not exist") unless File.exists?(args[0])
+    raise InvocationError.new("Destination Content File #{args[1]} does not exist") unless File.exists?(args[1])
+    raise InvocationError.new("Output Directory #{args[2]} does not exist") unless Dir.exists?(args[2])
   end
 
 end
