@@ -3,7 +3,7 @@ Lonely Planet Programming Test
 ## Specification
 Read the full specification [here](docs/introduction.pdf)
 
-The short version is this program is a batch processor for generating HTML documents describing different location around the world.
+The short version is this program is a batch processor for generating HTML documents describing different locations around the world.
 
 These are generated from two XML files:
  * a taxonomy file describing the relationship between locations (i.e. state and city with the state)
@@ -21,6 +21,9 @@ Then run ```bundle install``` to install the required gems for the project.
 The executable is located in ./bin/batch_process_destinations.rb and can be run with the following invocation:
 
 ```./bin/batch_process_destinations.rb <taxonomy file> <content file> <output directory>```
+
+You can run the this with the provided example files using the following command
+``` ./bin/batch_process_destinations.rb example/taxonomy.xml example/destinations.xml example/output ```
 
 ## Testing
 Tests are written in rspec and are located in ./spec and can be ran with ```bundle exec rspec spec```
