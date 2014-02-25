@@ -22,6 +22,16 @@ class Destination
     new(id, name, parent_destination)
   end
 
+  def ancestors
+    ancestors = []
+    ancestor = parent
+    while !ancestor.nil?
+      ancestors << ancestor
+      ancestor = ancestor.parent
+    end
+    ancestors
+  end
+
 private
 
   def self.validate_node(node)

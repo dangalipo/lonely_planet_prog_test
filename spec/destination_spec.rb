@@ -79,4 +79,44 @@ describe Destination do
 
   end
 
+  describe "#ancestors" do
+
+    let(:destination) { Destination.new(1, "test", parent) }
+
+    subject(:ancestors) { destination.ancestors }
+
+    context "destination has no ancestors" do
+
+      let(:parent) { nil }
+
+      specify { expect(ancestors).to be_empty }
+
+    end
+
+    context "destination has a parent" do
+
+      let(:parent)      { Destination.new(2, "parent", grandparent) }
+      let(:grandparent) { nil }
+
+      before(:each) { parent.children << destination }
+
+      specify { expect(ancestors).to include parent }
+      specify { expect(ancestors.count).to eq 1 }
+
+      context "and a grandparent" do
+
+        let(:grandparent) { Destination.new(3, "grandparent", nil) }
+
+        before(:each) { grandparent.children << parent }
+
+        specify { expect(ancestors[0]).to eq parent }
+        specify { expect(ancestors[1]).to eq grandparent }
+        specify { expect(ancestors.count).to eq 2 }
+
+      end
+
+    end
+
+  end
+
 end
