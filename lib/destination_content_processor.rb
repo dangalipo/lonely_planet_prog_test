@@ -17,6 +17,7 @@ class DestinationContentProcessor
   def process
     raise InvalidContent.new("Content file XML could not be parsed") unless parsed_document.errors.empty?
     root = find_node_in_children_by_name(parsed_document, "destinations")
+    raise InvalidContent.new("Could not find root destinations node in the provided content file") if taxonomy.nil?
     sanitize_children(root.children).each do |node|
       create_content(node)
     end
