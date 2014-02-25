@@ -1,8 +1,12 @@
 require 'nokogiri'
 require_relative 'destination'
+require_relative 'node_helpers'
+
+class InvalidTaxonomy < StandardError; end
 
 class DestinationTaxonomyProcessor
 
+  include NodeHelpers
 
   def initialize(taxonomy_filename)
     self.parsed_document = Nokogiri::XML(File.open(taxonomy_filename))
@@ -28,19 +32,6 @@ private
       parent_destination.children << destination unless parent_destination.nil?
       create_destinations(node, destination)
     end
-  end
-
-  # The below methods could be monkey patched onto Nokogiri::XML::Node and Nokogiri::XML::Document
-  # however, given the size of this project, I do not feel the benefit from the separation of responsibility
-  # is worth the readability cost of altering the documented interface for these two classes.
-
-  def find_node_in_children_by_name(node, name)
-    node.children.find{ |node| node.name == name }
-  end
-
-  # Removes any <Nokogiri::XML::Text:0x3fccd5c52948 "\n"> nodes caused by prettifying the XML document
-  def sanitize_children(children)
-    reject{|node| node.name == "text" && node.content.strip.empty?}
   end
 
 end

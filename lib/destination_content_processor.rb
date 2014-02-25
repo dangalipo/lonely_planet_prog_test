@@ -1,10 +1,13 @@
 require 'nokogiri'
 require_relative 'destination'
 require_relative 'destination_content'
+require_relative 'node_helpers'
 
 class InvalidContent < StandardError; end
 
 class DestinationContentProcessor
+
+  include NodeHelpers
 
   def initialize(content_filename, destinations)
     self.parsed_document = Nokogiri::XML(File.open(content_filename))
@@ -48,14 +51,6 @@ private
       parent_content.content << node.content if node.children.empty?
       nil
     end
-  end
-
-  # The below methods could be monkey patched onto Nokogiri::XML::Node and Nokogiri::XML::Document
-  # however, given the size of this project, I do not feel the benefit from the separation of responsibility
-  # is worth the readability cost of altering the documented interface for these two classes.
-
-  def find_node_in_children_by_name(node, name)
-    node.children.find{ |node| node.name == name }
   end
 
   # Removes any <Nokogiri::XML::Text:0x3fccd5c52948 "\n"> nodes caused by prettifying the XML document
