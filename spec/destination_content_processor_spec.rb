@@ -3,78 +3,94 @@ require 'destination_content_processor'
 describe DestinationContentProcessor do
   describe "process" do
 
-    let(:filename)  { File.join(Dir.pwd, "spec", "support", "example_content.xml") }
+
     let(:processor) { DestinationContentProcessor.new(filename, destinations) }
 
     subject(:process) { processor.process }
 
-    # Please consult spec/support/example_content.xml as a reference for these static values
+    context "content file is is valid XML" do
 
-    context "destination does not exist for an id" do
+      # Please consult spec/support/example_content.xml as a reference for these static values
 
-      let(:destinations) { {} }
+      let(:filename)  { File.join(Dir.pwd, "spec", "support", "example_content.xml") }
 
-      specify { expect{process}.to raise_error(InvalidContent, "Could not find a destination matching atlas_node_id 355064.") }
+      context "destination does not exist for an id" do
 
-    end
+        let(:destinations) { {} }
 
-    context "destination exists for an id" do
+        specify { expect{process}.to raise_error(InvalidContent, "Could not find a destination matching atlas_node_id 355064.") }
 
-      let(:destination)  { Destination.new("355064", "Africa", nil) }
-      let(:destinations) { { "355064" => destination } }
+      end
 
-      context 'Top level content' do
+      context "destination exists for an id" do
 
-        subject(:top_level_content) { process; destination.content }
+        let(:destination)  { Destination.new("355064", "Africa", nil) }
+        let(:destinations) { { "355064" => destination } }
 
-        specify { expect(top_level_content.count).to eq 2 }
-        specify { expect(top_level_content.collect(&:title)).to include "history" }
-        specify { expect(top_level_content.collect(&:title)).to include "practical_information" }
-        specify { expect(top_level_content.first.content).to be_empty }
-        specify { expect(top_level_content.last.content).to be_empty }
-        specify { expect(top_level_content.first.children.count).to eq 1 }
-        specify { expect(top_level_content.last.children.count).to eq 1 }
+        context 'Top level content' do
 
-        context 'first level child content' do
+          subject(:top_level_content) { process; destination.content }
 
-          subject(:first_level_child_content) { top_level_content.collect(&:children).flatten }
+          specify { expect(top_level_content.count).to eq 2 }
+          specify { expect(top_level_content.collect(&:title)).to include "history" }
+          specify { expect(top_level_content.collect(&:title)).to include "practical_information" }
+          specify { expect(top_level_content.first.content).to be_empty }
+          specify { expect(top_level_content.last.content).to be_empty }
+          specify { expect(top_level_content.first.children.count).to eq 1 }
+          specify { expect(top_level_content.last.children.count).to eq 1 }
 
-          specify { expect(first_level_child_content.count).to eq 2 }
-          specify { expect(first_level_child_content.collect(&:title)).to include "history" }
-          specify { expect(first_level_child_content.collect(&:title)).to include "health_and_safety" }
-          specify { expect(first_level_child_content.first.content).to be_empty }
-          specify { expect(first_level_child_content.last.content).to be_empty }
-          specify { expect(first_level_child_content.first.children.count).to eq 1 }
-          specify { expect(first_level_child_content.last.children.count).to eq 2 }
+          context 'first level child content' do
 
-          context 'bottom level content' do
+            subject(:first_level_child_content) { top_level_content.collect(&:children).flatten }
 
-            subject(:bottom_level_content) { first_level_child_content.collect(&:children).flatten }
+            specify { expect(first_level_child_content.count).to eq 2 }
+            specify { expect(first_level_child_content.collect(&:title)).to include "history" }
+            specify { expect(first_level_child_content.collect(&:title)).to include "health_and_safety" }
+            specify { expect(first_level_child_content.first.content).to be_empty }
+            specify { expect(first_level_child_content.last.content).to be_empty }
+            specify { expect(first_level_child_content.first.children.count).to eq 1 }
+            specify { expect(first_level_child_content.last.children.count).to eq 2 }
 
-            specify { expect(bottom_level_content.count).to eq 3 }
+            context 'bottom level content' do
 
-            specify { expect(bottom_level_content.collect(&:title)).to include "history" }
-            specify { expect(bottom_level_content.collect(&:title)).to include "before_you_go" }
-            specify { expect(bottom_level_content.collect(&:title)).to include "dangers_and_annoyances" }
+              subject(:bottom_level_content) { first_level_child_content.collect(&:children).flatten }
 
-            specify { expect(bottom_level_content.first.content.count).to eq 2 }
-            specify { expect(bottom_level_content.first.content).to include "Some history content" }
-            specify { expect(bottom_level_content.first.content).to include "Some more history content" }
+              specify { expect(bottom_level_content.count).to eq 3 }
 
-            specify { expect(bottom_level_content[1].content.count).to eq 2 }
-            specify { expect(bottom_level_content[1].content).to include "Some before you go content" }
-            specify { expect(bottom_level_content[1].content).to include "Some more before you go content" }
+              specify { expect(bottom_level_content.collect(&:title)).to include "history" }
+              specify { expect(bottom_level_content.collect(&:title)).to include "before_you_go" }
+              specify { expect(bottom_level_content.collect(&:title)).to include "dangers_and_annoyances" }
 
-            specify { expect(bottom_level_content[2].content.count).to eq 1 }
-            specify { expect(bottom_level_content[2].content).to include "Some danger and annoyances content" }
+              specify { expect(bottom_level_content.first.content.count).to eq 2 }
+              specify { expect(bottom_level_content.first.content).to include "Some history content" }
+              specify { expect(bottom_level_content.first.content).to include "Some more history content" }
 
-            specify { expect(bottom_level_content.collect(&:children).flatten).to be_empty }
+              specify { expect(bottom_level_content[1].content.count).to eq 2 }
+              specify { expect(bottom_level_content[1].content).to include "Some before you go content" }
+              specify { expect(bottom_level_content[1].content).to include "Some more before you go content" }
+
+              specify { expect(bottom_level_content[2].content.count).to eq 1 }
+              specify { expect(bottom_level_content[2].content).to include "Some danger and annoyances content" }
+
+              specify { expect(bottom_level_content.collect(&:children).flatten).to be_empty }
+
+            end
 
           end
 
         end
 
       end
+
+    end
+
+    context "content file is not valid XML" do
+
+
+      let(:destinations) { {} }
+      let(:filename)     { File.join(Dir.pwd, "spec", "support", "invalid_xml.xml") }
+
+      specify { expect{process}.to raise_error(InvalidContent, "Content file XML could not be parsed") }
 
     end
 
