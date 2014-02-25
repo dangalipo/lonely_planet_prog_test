@@ -7,7 +7,7 @@ class DestinationRenderer
 
   def initialize(destination)
     self.destination = destination
-    self.template = File.read(TEMPLATE)
+    self.template = File.read(File.join(File.expand_path(File.dirname(__FILE__)),TEMPLATE))
   end
 
   def render
@@ -64,7 +64,7 @@ private
   end
 
   def navigation_link(navigation_destination)
-    "<li><a href=\"#{navigation_destination.id}\">#{navigation_destination.name}</a></li>"
+    "<li><a href=\"#{navigation_destination.id}.html\">#{navigation_destination.name}</a></li>"
   end
 
 end

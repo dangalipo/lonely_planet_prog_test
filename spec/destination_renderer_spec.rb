@@ -6,7 +6,7 @@ describe DestinationRenderer do
 
   describe "#render" do
 
-    before(:each)     { stub_const("DestinationRenderer::TEMPLATE", "spec/support/example_template.html") }
+    before(:each)     { stub_const("DestinationRenderer::TEMPLATE", "../spec/support/example_template.html") }
     let(:id)          { 1 }
     let(:name)        { 'test' }
     let(:parent)      { nil }
@@ -37,8 +37,8 @@ describe DestinationRenderer do
           [
             "<h4>Sub Regions</h4>",
             "<ul>",
-            "<li><a href=\"#{first_child_id}\">#{first_child_name}</a></li>",
-            "<li><a href=\"#{second_child_id}\">#{second_child_name}</a></li>",
+            "<li><a href=\"#{first_child_id}.html\">#{first_child_name}</a></li>",
+            "<li><a href=\"#{second_child_id}.html\">#{second_child_name}</a></li>",
             "</ul>"].join("\n")
         end
 
@@ -66,7 +66,7 @@ describe DestinationRenderer do
           [
             "<h4>Parent Regions</h4>",
             "<ul>",
-            "<li><a href=\"#{parent_id}\">#{parent_name}</a></li>",
+            "<li><a href=\"#{parent_id}.html\">#{parent_name}</a></li>",
             "</ul>"].join("\n")
         end
 
@@ -74,8 +74,8 @@ describe DestinationRenderer do
           [
             "<h4>Sub Regions</h4>",
             "<ul>",
-            "<li><a href=\"#{first_child_id}\">#{first_child_name}</a></li>",
-            "<li><a href=\"#{second_child_id}\">#{second_child_name}</a></li>",
+            "<li><a href=\"#{first_child_id}.html\">#{first_child_name}</a></li>",
+            "<li><a href=\"#{second_child_id}.html\">#{second_child_name}</a></li>",
             "</ul>"].join("\n")
         end
 
@@ -102,8 +102,8 @@ describe DestinationRenderer do
           [
             "<h4>Parent Regions</h4>",
             "<ul>",
-            "<li><a href=\"#{grandparent_id}\">#{grandparent_name}</a></li>",
-            "<li><a href=\"#{parent_id}\">#{parent_name}</a></li>",
+            "<li><a href=\"#{grandparent_id}.html\">#{grandparent_name}</a></li>",
+            "<li><a href=\"#{parent_id}.html\">#{parent_name}</a></li>",
             "</ul>"].join("\n")
         end
 
