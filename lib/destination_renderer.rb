@@ -41,9 +41,7 @@ private
     if navigation_tree.empty?
       navigation_content = nil
     else
-      navigation_elements = []
-      navigation_elements << "<h4>#{title}</h4>"
-      navigation_elements << "<ul>"
+      navigation_elements = ["<h4>#{title}</h4>", "<ul>"]
       navigation_tree.each do |navigation_item|
         navigation_elements << navigation_link(navigation_item)
       end
@@ -54,8 +52,7 @@ private
   end
 
   def generate_destination_content(destination_content, level)
-    generated_content = []
-    generated_content << "<h#{level}>#{destination_content.title}</h#{level}>"
+    generated_content = ["<h#{level}>#{destination_content.title}</h#{level}>"]
     generated_content << destination_content.content.collect{ |content| "<p>#{content}</p>" }.join("\n") unless destination_content.content.empty?
     destination_content.children.each do |child_content|
       generated_content << generate_destination_content(child_content, (level + 1))
