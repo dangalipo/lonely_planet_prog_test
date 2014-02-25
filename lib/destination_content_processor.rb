@@ -38,7 +38,7 @@ private
   # Uses the XML document to build a similar tree of DestinationContent objects
   def compile_content(node, parent_content = nil)
     if !node_contains_content?(node)
-      destination_content = find_or_create_destination_content(parent_content, node)
+      destination_content = DestinationContent.find_or_create_destination_content(node.name, parent_content)
 
       sanitize_children(node.children).each do |node|
         child = compile_content(node, destination_content)
@@ -63,11 +63,6 @@ private
   #
   def node_contains_content?(node)
     node.name == '#cdata-section'
-  end
-
-  def find_or_create_destination_content(parent_content, node)
-    destination_content = parent_content.children.find {|content| content.title == node.name } unless parent_content.nil?
-    destination_content || DestinationContent.new(node.name, parent_content)
   end
 
   # Removes any <Nokogiri::XML::Text:0x3fccd5c52948 "\n"> nodes caused by prettifying the XML document
