@@ -15,8 +15,11 @@ class DestinationBatchProcessor
   end
 
   def process
+    puts "Processing destinations..."
     destinations = DestinationTaxonomyProcessor.new(taxonomy_filename).process
+    puts "Processing content..."
     DestinationContentProcessor.new(destination_content_filename, destinations).process
+    puts "Generating output html..."
     destinations.values.each do |destination|
       content = DestinationRenderer.new(destination).render
       File.write(File.join(output_dir, "#{destination.id}.html"), content)

@@ -16,7 +16,9 @@ class DestinationTaxonomyProcessor
   def process
     raise InvalidTaxonomy.new("Content file XML could not be parsed") unless parsed_document.errors.empty?
     taxonomies = find_node_in_children_by_name(parsed_document, "taxonomies")
+    raise InvalidTaxonomy.new("Could not find root taxonomies node in the provided taxonomy file") if taxonomies.nil?
     taxonomy =  find_node_in_children_by_name(taxonomies, "taxonomy")
+    raise InvalidTaxonomy.new("Could not find root taxonomy node in the provided taxonomy file") if taxonomy.nil?
     create_destinations(taxonomy)
     destinations
   end
