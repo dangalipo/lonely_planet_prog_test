@@ -1,1 +1,2 @@
-example/output/*
+example/output/*.html
+example/output/static
